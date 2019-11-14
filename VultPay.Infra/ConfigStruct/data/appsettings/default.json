@@ -1,0 +1,15 @@
+{
+  "GlobalConfiguration": "/global.conf",
+  "ConnectionStrings": {
+    "MongoConnection": "mongodb://vultadmin:EB7E4988B64242F8A2F7032171382C3F@172.10.1.1"
+  },
+  "RedisEndPoints": [
+    "172.10.1.2"
+  ],
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}

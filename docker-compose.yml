@@ -1,0 +1,91 @@
+version: '3.4'
+
+##############################################################
+# VARIABLES                                                  #
+##############################################################
+
+x-application:
+  &settings_and_databases
+    - "${ROOT_PATH}:/data"
+    - "${ROOT_PATH}/application/debug:/debug"
+    - "${ROOT_PATH}/redis/redis.conf:/redis.conf"
+    - "${SSL_CERTIFICATE_PFX}:/vultpay_server.pfx"
+    - "${ROOT_PATH}/appsettings/default.json:/default.json"
+    - "${ROOT_PATH}/application/configuration/global.conf:/global.conf"    
+    - "${ROOT_PATH}/application/payment/providers/cielo/provider.conf:/cieloProvider.conf"
+    - "${ROOT_PATH}/application/payment/providers/cielo/fraud_analysis.conf:/fraudAnalysis.conf"        
+
+x-ngix:
+  &ngix_volume
+    - "${ROOT_PATH}/nginx/:/etc/nginx/conf.d"
+    - "${SSL_CERTIFICATE_KEY}:/etc/nginx/conf.d/vultpay_server.key"
+    - "${SSL_CERTIFICATE_CRT}:/etc/nginx/conf.d/vultpay_ssl_bundle.crt"    
+
+##############################################################
+# SERVICES                                                   #
+##############################################################
+
+services:
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes: *ngix_volume
+    networks:
+      default:
+        ipv4_address: 172.10.3.1
+
+  mongodb:
+    image: mongo:latest
+    container_name: "mongodb"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=vultadmin
+      - MONGO_INITDB_ROOT_PASSWORD=EB7E4988B64242F8A2F7032171382C3F
+    ports:
+      - "127.0.0.1:5935:27017"
+    volumes:
+      - mongodata:/data/db
+    networks:
+      default:
+        ipv4_address: 172.10.1.1
+
+  redis-server:
+    container_name: redis-server
+    image: redis:latest    
+    command: redis-server /redis.conf
+    sysctls:
+      net.core.somaxconn: 1024
+    ports:
+      - "127.0.0.1:4137:6379"
+    volumes: *settings_and_databases
+    networks:
+      default:
+        ipv4_address: 172.10.1.2
+
+  vultpay.payservice:
+    container_name: vultpay.payservice
+    image: vultpay-payservice
+    environment:
+     - APPSETTINGS_FILELOCATION=/default.json
+    depends_on:
+      - nginx
+      - mongodb
+      - redis-server
+    volumes: *settings_and_databases
+    build:
+      context: .
+      dockerfile: VultPay.PayService/Dockerfile
+    networks:
+      default:
+        ipv4_address: 172.10.2.2
+
+networks:
+ default:
+  ipam:
+   config:
+      - subnet: 172.10.0.0/16
+
+volumes:
+  mongodata:
