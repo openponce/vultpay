@@ -230,6 +230,35 @@ namespace VultPay.DataBase.ShoppingCart
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="cartId"></param>
+        /// <param name="customer"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateCustomer(string cartId, Customer customer)
+        {
+            try
+            {
+                var cart = await GetShoppingCart(cartId);
+                if (cart != null)
+                {
+                    cart.Customer = customer;
+                    var filter = Builders<Domain.Models.Application.ShoppingCart.ShoppingCart>.Filter.Eq(s => s.Id, ObjectId.Parse(cartId));
+                    var result = await MongoDatabaseInstance
+                                        .GetCollection<Domain.Models.Application.ShoppingCart.ShoppingCart>(CartCollection)
+                                        .ReplaceOneAsync(filter, cart);
+                    //
+                    return result.IsAcknowledged;
+                }
+                return false;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="collectionName"></param>
         /// <returns></returns>
         private async Task CreateCollectionWithTTLAsync(string collectionName)
