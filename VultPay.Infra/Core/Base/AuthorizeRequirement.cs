@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Internal;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using Microsoft.Extensions.Configuration;
@@ -116,10 +116,13 @@ namespace VultPay.Infra.Core.Base
 
         string Encode(string input, byte[] key)
         {
-            HMACSHA256 myhmacsha = new HMACSHA256(key);
+            using HMACSHA256 myhmacsha = new HMACSHA256(key);
+            //
             byte[] byteArray = Encoding.UTF8.GetBytes(input);
             MemoryStream stream = new MemoryStream(byteArray);
+            //
             byte[] hashValue = myhmacsha.ComputeHash(stream);
+            //
             return Base64UrlEncoder.Encode(hashValue);
         }
     }

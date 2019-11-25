@@ -31,7 +31,7 @@ namespace VultPay.Application.Transactions.Providers
 
         public async Task<string> GetCardToken(Domain.Models.Application.Transaction transaction)
         {
-            return transaction.ToString();
+            return await Task.Run(() => { return transaction.ToString(); });
         }
 
     }

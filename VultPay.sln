@@ -35,8 +35,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VultPay.PayService", "VultP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitTestShoppingCart", "NUnitTestCartShop\NUnitTestShoppingCart.csproj", "{C7E22DB7-682A-4648-B987-D00A199309D6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VultPay.ShoppingCart", "VultPay.ShoppingCart\VultPay.ShoppingCart.csproj", "{AB778988-3A57-4721-AD9F-4288CE32FA6A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,10 +65,6 @@ Global
 		{C7E22DB7-682A-4648-B987-D00A199309D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7E22DB7-682A-4648-B987-D00A199309D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7E22DB7-682A-4648-B987-D00A199309D6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB778988-3A57-4721-AD9F-4288CE32FA6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB778988-3A57-4721-AD9F-4288CE32FA6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB778988-3A57-4721-AD9F-4288CE32FA6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB778988-3A57-4721-AD9F-4288CE32FA6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,7 +76,6 @@ Global
 		{D83C3195-23C6-4E45-A95F-6170CC93BF10} = {1F98122C-3D2B-4450-8B43-5B78F8D19449}
 		{6E2101B9-D74A-4605-ACA9-22DE9B669BE9} = {78B092E5-F856-4D45-8FB0-5B4652C283B6}
 		{C7E22DB7-682A-4648-B987-D00A199309D6} = {EFD3E4CC-2933-47A4-8AF7-49D740E26818}
-		{AB778988-3A57-4721-AD9F-4288CE32FA6A} = {FE03831D-83B1-4570-B0ED-B4F50C553ECF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00056471-428D-4EF3-B945-B8AA0F04164E}
